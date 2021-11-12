@@ -36,6 +36,26 @@ document.addEventListener('DOMContentLoaded', () => {
         evt.preventDefault();
         const elemObj = {};
 
+        // Переписать на filter
+        const formElems = [...formCustomer.elements]
+            .filter((elem) => (
+                (elem.tagName === 'INPUT' && elem.type !== 'radio') ||
+                (elem.type === 'radio' && elem.checked) ||
+                (elem.tagName === 'TEXTAREA')
+            ));
+
+        // Перебор с помощью forEach:
+        /*
+        formElems.forEach((elem) => {
+            if ((elem.tagName === 'INPUT' && elem.type !== 'radio') ||
+                (elem.type === 'radio' && elem.checked) ||
+                (elem.tagName === 'TEXTAREA')) {
+                elemObj[elem.name] = elem.value;
+            }
+        });
+        */
+
+        /* // Перебор с помощью for
         for (const elem of formCustomer.elements) {
             if ((elem.tagName === 'INPUT' && elem.type !== 'radio') ||
                 (elem.type === 'radio' && elem.checked) ||
@@ -43,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 elemObj[elem.name] = elem.value;
             }
         }
+        */
 
         orders.push(elemObj);
 
