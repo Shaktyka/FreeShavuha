@@ -38,6 +38,39 @@ document.addEventListener('DOMContentLoaded', () => {
     const openModal = (orderNumber) => {
         const order = orders[orderNumber];
         const modal = order.active ? orderActiveModal : orderReadModal;
+
+        const modalTitle = modal.querySelector('.modal-title');
+        const firstName = modal.querySelector('.firstName');
+        const email = modal.querySelector('.email');
+        const description = modal.querySelector('.description');
+        const deadline = modal.querySelector('.deadline');
+        const currency = modal.querySelector('.currency_img');
+        const count = modal.querySelector('.count');
+        const phone = modal.querySelector('.phone');
+        const getOrderBtn = modal.querySelector('.get-order');
+        const closeModalBtn = modal.querySelector('.close');
+
+        // Прописывает данные заказа в поля модалки
+        modalTitle.textContent = order.title;
+        firstName.textContent = order.firstName;
+        email.textContent = order.email;
+        description.textContent = order.description;
+        deadline.textContent = order.deadline;
+        currency.classList.add(`${order.currency}`);
+        count.textContent = order.amount;
+        phone.href = order.phone;
+
+        // Закрывает модалку:
+        closeModalBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        // Добавляет обработчик на кнопку принятия заказа:
+        getOrderBtn.addEventListener('click', () => {
+            // добавить свойство к параметрам заказа
+        });
+
+        // Открывает модалку
         modal.style.display = 'block';
     };
 
