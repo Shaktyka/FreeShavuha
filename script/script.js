@@ -8,19 +8,39 @@ document.addEventListener('DOMContentLoaded', () => {
     const blockChoice = document.getElementById('block-choice');
     const btnExit = document.getElementById('btn-exit');
     const formCustomer = document.getElementById('form-customer');
+    const ordersTable = document.getElementById('orders');
 
     const orders = [];
 
+    const renderOrders = () => {
+
+        ordersTable.textContent = '';
+
+        if (orders.length === 0) {
+            return;
+        }
+
+        orders.forEach((order, i) => {
+            ordersTable.innerHTML += `
+              <tr class = "order">
+                <td>${i + 1}</td>
+                <td>${order.title}</td>
+                <td class="${order.currency}"></td>
+                <td>${order.deadline}</td>
+              </tr>`;
+        });
+
+    };
+
     customerBtn.addEventListener('click', () => {
-        // console.log(1);
         blockChoice.style.display = 'none';
         blockCustomer.style.display = 'block';
         btnExit.style.display = 'block';
     });
 
     freelancerBtn.addEventListener('click', () => {
-        // console.log(2);
         blockChoice.style.display = 'none';
+        renderOrders();
         blockFreelancer.style.display = 'block';
         btnExit.style.display = 'block';
     });
@@ -36,16 +56,17 @@ document.addEventListener('DOMContentLoaded', () => {
         evt.preventDefault();
         const elemObj = {};
 
+        const formElems = [...formCustomer.elements];
+
         // Переписать на filter
-        const formElems = [...formCustomer.elements]
-            .filter((elem) => (
-                (elem.tagName === 'INPUT' && elem.type !== 'radio') ||
-                (elem.type === 'radio' && elem.checked) ||
-                (elem.tagName === 'TEXTAREA')
-            ));
+        // const formElems = [...formCustomer.elements]
+        //     .filter((elem) => (
+        //         (elem.tagName === 'INPUT' && elem.type !== 'radio') ||
+        //         (elem.type === 'radio' && elem.checked) ||
+        //         (elem.tagName === 'TEXTAREA')
+        //     ));
 
         // Перебор с помощью forEach:
-        /*
         formElems.forEach((elem) => {
             if ((elem.tagName === 'INPUT' && elem.type !== 'radio') ||
                 (elem.type === 'radio' && elem.checked) ||
@@ -53,7 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 elemObj[elem.name] = elem.value;
             }
         });
-        */
 
         /* // Перебор с помощью for
         for (const elem of formCustomer.elements) {
@@ -69,4 +89,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
         formCustomer.reset();
     });
+
 });
