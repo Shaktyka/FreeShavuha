@@ -12,7 +12,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const orderReadModal = document.getElementById('order_read');
     const orderActiveModal = document.getElementById('order_active');
 
-    const orders = [];
+    // Получает заказы из localStorage:
+    const getOrders = () => {
+        return JSON.parse(localStorage.getItem('freeOrders')) || [];
+    };
+
+    // Помещает данные заказов в localStorage:
+    const toStorage = () => {
+        localStorage.setItem('freeOrders', JSON.stringify(orders));
+    };
+
+    const orders = getOrders();
+
+    // Считает кол-во дней до дедлайна:
+    const calcDeadline = (dateStr) => {
+        const days = 1;
+        return days;
+    };
 
     const renderOrders = () => {
 
@@ -41,6 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const modal = target.closest('.order-modal');
         const order = orders[modal.id];
 
+        const processCloseModal = () => {
+            modal.style.display = 'none';
+            toStorage();
+            renderOrders();
+        };
+
         if (target.closest('.close') || target === modal) {
             modal.style.display = 'none';
         }
@@ -48,25 +70,20 @@ document.addEventListener('DOMContentLoaded', () => {
         // Взять заказ
         if (target.classList.contains('get-order')) {
             order.active = true;
-            modal.style.display = 'none';
-            renderOrders();
+            processCloseModal();
         }
 
         // Отказаться
         if (target.id === 'capitulation') {
             order.active = false;
-            modal.style.display = 'none';
-            renderOrders();
+            processCloseModal();
         }
 
         // Выполнил:
         if (target.id === 'ready') {
             const doneOrderIndex = orders.indexOf(order);
-
             orders.splice(doneOrderIndex, 1);
-
-            modal.style.display = 'none';
-            renderOrders();
+            processCloseModal();
         }
     };
 
@@ -179,9 +196,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         */
 
-        orders.push(elemObj);
-
         formCustomer.reset();
+
+        orders.push(elemObj);
+        toStorage();
     });
 
 });
