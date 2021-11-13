@@ -23,8 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         orders.forEach((order, i) => {
+            const orderClass = order.active ? 'taken' : '';
+
             ordersTable.innerHTML += `
-              <tr class = "order" data-order-number="${i}">
+              <tr class = "order ${orderClass}" data-order-number="${i}">
                 <td>${i + 1}</td>
                 <td>${order.title}</td>
                 <td class="${order.currency}"></td>
@@ -34,45 +36,83 @@ document.addEventListener('DOMContentLoaded', () => {
 
     };
 
+    const modalClickHandler = (evt) => {
+        const target = evt.target;
+        const modal = target.closest('.order-modal');
+        const order = orders[modal.id];
+
+        if (target.closest('.close') || target === modal) {
+            modal.style.display = 'none';
+        }
+
+        // Взять заказ
+        if (target.classList.contains('get-order')) {
+            order.active = true;
+            modal.style.display = 'none';
+            renderOrders();
+        }
+
+        // Отказаться
+        if (target.id === 'capitulation') {
+            order.active = false;
+            modal.style.display = 'none';
+            renderOrders();
+        }
+
+        // Выполнил:
+        if (target.id === 'ready') {
+            const doneOrderIndex = orders.indexOf(order);
+
+            orders.splice(doneOrderIndex, 1);
+
+            modal.style.display = 'none';
+            renderOrders();
+        }
+    };
+
     // Открывает модальное окно
     const openModal = (orderNumber) => {
         const order = orders[orderNumber];
-        const modal = order.active ? orderActiveModal : orderReadModal;
+        const {
+            title,
+            firstName,
+            email,
+            description,
+            deadline,
+            amount,
+            currency,
+            phone,
+            active = false
+        } = order;
 
-        const modalTitle = modal.querySelector('.modal-title');
-        const firstName = modal.querySelector('.firstName');
-        const email = modal.querySelector('.email');
-        const description = modal.querySelector('.description');
-        const deadline = modal.querySelector('.deadline');
-        const currency = modal.querySelector('.currency_img');
-        const count = modal.querySelector('.count');
-        const phone = modal.querySelector('.phone');
-        const getOrderBtn = modal.querySelector('.get-order');
-        const closeModalBtn = modal.querySelector('.close');
+        const modal = active ? orderActiveModal : orderReadModal;
+
+        const modalTitleEl = modal.querySelector('.modal-title');
+        const firstNameEl = modal.querySelector('.firstName');
+        const emailEl = modal.querySelector('.email');
+        const descriptionEl = modal.querySelector('.description');
+        const deadlineEl = modal.querySelector('.deadline');
+        const currencyEl = modal.querySelector('.currency_img');
+        const countEl = modal.querySelector('.count');
+        const phoneEl = modal.querySelector('.phone');
+
+        modal.id = orderNumber;
 
         // Прописывает данные заказа в поля модалки
-        modalTitle.textContent = order.title;
-        firstName.textContent = order.firstName;
-        email.textContent = order.email;
-        email.href = 'mailto:' + order.email;
-        description.textContent = order.description;
-        deadline.textContent = order.deadline;
-        currency.className = `currency_img ${order.currency}`;
-        count.textContent = order.amount;
-        phone.href = 'tel:' + order.phone;
-
-        // Закрывает модалку:
-        closeModalBtn.addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
-
-        // Добавляет обработчик на кнопку принятия заказа:
-        getOrderBtn.addEventListener('click', () => {
-            // добавить свойство к параметрам заказа
-        });
+        modalTitleEl.textContent = title;
+        firstNameEl.textContent = firstName;
+        emailEl.textContent = email;
+        emailEl.href = 'mailto:' + email;
+        descriptionEl.textContent = description;
+        deadlineEl.textContent = deadline;
+        currencyEl.className = `currency_img ${currency}`;
+        countEl.textContent = amount;
+        phoneEl ? phoneEl.href = 'tel:' + phone : '';
 
         // Открывает модалку
-        modal.style.display = 'block';
+        modal.style.display = 'flex';
+
+        modal.addEventListener('click', modalClickHandler);
     };
 
     // Обработчик на таблицу при клике по строке
