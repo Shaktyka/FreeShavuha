@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnExit = document.getElementById('btn-exit');
     const formCustomer = document.getElementById('form-customer');
     const ordersTable = document.getElementById('orders');
+    const orderReadModal = document.getElementById('order_read');
+    const orderActiveModal = document.getElementById('order_active');
 
     const orders = [];
 
@@ -22,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         orders.forEach((order, i) => {
             ordersTable.innerHTML += `
-              <tr class = "order">
+              <tr class = "order" data-order-number="${i}">
                 <td>${i + 1}</td>
                 <td>${order.title}</td>
                 <td class="${order.currency}"></td>
@@ -31,6 +33,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
     };
+
+    // Открывает модальное окно
+    const openModal = (orderNumber) => {
+        const order = orders[orderNumber];
+        const modal = order.active ? orderActiveModal : orderReadModal;
+        modal.style.display = 'block';
+    };
+
+    // Обработчик на таблицу при клике по строке
+    ordersTable.addEventListener('click', (evt) => {
+        const target = evt.target;
+        const targetOrder = target.closest('.order');
+        const orderNumber = targetOrder.dataset.orderNumber;
+
+        if (targetOrder) {
+            openModal(orderNumber);
+        }
+    });
 
     customerBtn.addEventListener('click', () => {
         blockChoice.style.display = 'none';
