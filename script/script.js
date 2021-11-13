@@ -54,11 +54,12 @@ document.addEventListener('DOMContentLoaded', () => {
         modalTitle.textContent = order.title;
         firstName.textContent = order.firstName;
         email.textContent = order.email;
+        email.href = 'mailto:' + order.email;
         description.textContent = order.description;
         deadline.textContent = order.deadline;
-        currency.classList.add(`${order.currency}`);
+        currency.className = `currency_img ${order.currency}`;
         count.textContent = order.amount;
-        phone.href = order.phone;
+        phone.href = 'tel:' + order.phone;
 
         // Закрывает модалку:
         closeModalBtn.addEventListener('click', () => {
