@@ -24,19 +24,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const orders = getOrders();
 
+    // Добавляет склонение существительных:
+    const declOfNum = (number, titles) => {
+        const cases = [2, 0, 1, 1, 1, 2];
+        const noun = titles[(number % 100 > 4 && number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5]];
+        return `${number} ${noun}`;
+    };
+
     // Считает кол-во дней до дедлайна:
     const calcDeadline = (dateStr) => {
         const deadline = new Date(dateStr);
         const today = Date.now();
 
-        const days = (deadline - today) / 1000 / 60 / 60 / 24;
-        return Math.floor(days);
-    };
+        const remaining = (deadline - today) / 1000 / 60 / 60;
 
-    // Добавляет склонение существительных:
-    const declOfNum = (number, titles) => {
-        const cases = [2, 0, 1, 1, 1, 2];
-        return titles[(number % 100 > 4 && number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5]];
+        if (remaining / 24 > 2) {
+            return declOfNum(Math.floor(remaining / 24), ['день', 'дня', 'дней']);
+        }
+
+        return declOfNum(Math.floor(remaining), ['час', 'часа', 'часов']);
     };
 
     // Рендерит заказы:
@@ -50,15 +56,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         orders.forEach((order, i) => {
             const orderClass = order.active ? 'taken' : '';
-            const titles = ['день', 'дня', 'дней'];
-            const daysToDeadline = calcDeadline(order.deadline);
 
             ordersTable.innerHTML += `
               <tr class = "order ${orderClass}" data-order-number="${i}">
                 <td>${i + 1}</td>
                 <td>${order.title}</td>
                 <td class="${order.currency}"></td>
-                <td>${daysToDeadline} ${declOfNum(daysToDeadline, titles)}</td>
+                <td>${calcDeadline(order.deadline)}</td>
               </tr>`;
         });
 
