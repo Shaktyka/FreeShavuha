@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return JSON.parse(localStorage.getItem('freeOrders')) || [];
     };
 
-    // Помещает данные заказов в localStorage:
+    // Помещает заказы в localStorage:
     const toStorage = () => {
         localStorage.setItem('freeOrders', JSON.stringify(orders));
     };
@@ -33,11 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return Math.floor(days);
     };
 
+    // Добавляет склонение существительных:
     const declOfNum = (number, titles) => {
         const cases = [2, 0, 1, 1, 1, 2];
         return titles[(number % 100 > 4 && number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5]];
     };
 
+    // Рендерит заказы:
     const renderOrders = () => {
 
         ordersTable.textContent = '';
@@ -62,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     };
 
+    // Обрабатывает клики в модальном окне заявки:
     const modalClickHandler = (evt) => {
         const target = evt.target;
         const modal = target.closest('.order-modal');
@@ -77,13 +80,13 @@ document.addEventListener('DOMContentLoaded', () => {
             modal.style.display = 'none';
         }
 
-        // Взять заказ
+        // Взять заказ:
         if (target.classList.contains('get-order')) {
             order.active = true;
             processCloseModal();
         }
 
-        // Отказаться
+        // Отказаться:
         if (target.id === 'capitulation') {
             order.active = false;
             processCloseModal();
@@ -153,12 +156,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Обработчик клика по кнопке "Заказчик":
     customerBtn.addEventListener('click', () => {
         blockChoice.style.display = 'none';
         blockCustomer.style.display = 'block';
         btnExit.style.display = 'block';
     });
 
+    // Обработчик клика по кнопке "Фрилансер":
     freelancerBtn.addEventListener('click', () => {
         blockChoice.style.display = 'none';
         renderOrders();
@@ -166,6 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btnExit.style.display = 'block';
     });
 
+    // Обработчик клика по кнопке "Выход":
     btnExit.addEventListener('click', () => {
         blockCustomer.style.display = 'none';
         blockFreelancer.style.display = 'none';
@@ -173,6 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btnExit.style.display = 'none';
     });
 
+    // Обработчик отправки формы создания заказа:
     formCustomer.addEventListener('submit', (evt) => {
         evt.preventDefault();
         const elemObj = {};
