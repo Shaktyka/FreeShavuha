@@ -12,14 +12,13 @@
 
 <body>
 
-    <!--hello world-->
     <main class="container py-5 text-center">
         <div id="block-choice">
             <img class="d-block mx-auto mb-4" src="./img/logo.png" alt="" width="72" height="72">
             <h1>FreeShavuha</h1>
-            <p class="lead text-muted">Добро пожаловать на нашу фриланс биржу</p>
-            <p class="lead text-muted">Если вы заказчик то вы можете заказать проект</p>
-            <p class="lead text-muted">Если вы фрилансер то вы всегда найдете у нас проект по силам</p>
+            <p class="lead text-muted">Добро пожаловать на нашу фриланс-биржу!</p>
+            <p class="lead text-muted">Если вы заказчик, то вы можете заказать проект.</p>
+            <p class="lead text-muted">Если вы фрилансер, то вы всегда найдете у нас проект по силам.</p>
             <p class="mt-5">
                 <a href="#" id="customer" class="btn btn-primary my-3 px-4 py-2">Заказчик</a>
                 <a href="#" id="freelancer" class="btn btn-secondary my-3 px-4 py-2">Фрилансер</a>
@@ -27,10 +26,10 @@
         </div>
 
 
-        <!--meanie - заказчик-->
+        <!--заказчик-->
 
         <div id="block-customer">
-            <img class="d-block mx-auto mb-4" src="./img/logo.png" alt="" width="72" height="72">
+            <img class="d-block mx-auto mb-4" src="./img/logo.png" alt="Логотип" width="72" height="72">
             <h1>FreeShavuha</h1>
             <div class="col">
                 <h4 class="mb-3">Оставьте заявку</h4>
@@ -38,20 +37,20 @@
 
                     <div class="mb-3">
                         <label for="title">Заголовок (краткое описание задачи)</label>
-                        <input type="text" class="form-control" id="title" name="title" required value="заголовок">
+                        <input type="text" class="form-control" id="title" name="title" required placeholder="Название задачи">
                     </div>
                     <div class="row">
                         <div class="col-md-4 mb-3">
                             <label for="firstName">Ваше имя</label>
-                            <input type="text" class="form-control" id="firstName" name="firstName" required value="ваше имя">
+                            <input type="text" class="form-control" id="firstName" name="firstName" required placeholder="Ваше имя">
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="you@mail.com" required value="email@email">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="you@mail.com" required>
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="phone">Номер телефона <span class="text-muted">(optional)</span></label>
-                            <input type="text" class="form-control" id="phone" name="phone" value="911">
+                            <input type="text" class="form-control" id="phone" name="phone" placeholder="911">
                         </div>
                     </div>
 
@@ -66,7 +65,7 @@
 
                             <div class="mb-3">
                                 <label for="amount">Количество</label>
-                                <input type="number" class="form-control" id="amount" name="amount" required value="10">
+                                <input type="number" class="form-control" id="amount" name="amount" required placeholder="1">
                             </div>
                             <div class="d-flex justify-content-center">
                                 <label class="currency">
@@ -87,7 +86,7 @@
                             <div class="mb-3">
                                 <label for="deadline">Срок выполнения до:</label>
 
-                                <input type="date" id="deadline" class="form-control" name="deadline" max="2025-12-31" required value="2021-11-30">
+                                <input type="date" id="deadline" class="form-control" name="deadline" max="2030-12-31" required placeholder="2021-11-30">
                             </div>
                             <button class="btn btn-primary btn-lg btn-block" type="submit">Отправить заявку</button>
                         </div>
