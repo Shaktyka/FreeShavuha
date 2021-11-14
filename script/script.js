@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
         emailEl.textContent = email;
         emailEl.href = 'mailto:' + email;
         descriptionEl.textContent = description;
-        deadlineEl.textContent = deadline;
+        deadlineEl.textContent = deadline; // Преобразовать в привычный вид
         currencyEl.className = `currency_img ${currency}`;
         countEl.textContent = amount;
         phoneEl ? phoneEl.href = 'tel:' + phone : '';
@@ -159,6 +159,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Обработчик клика по кнопке "Заказчик":
     customerBtn.addEventListener('click', () => {
         blockChoice.style.display = 'none';
+        const today = new Date().toISOString().substring(0, 10);
+        document.getElementById('deadline').min = today;
         blockCustomer.style.display = 'block';
         btnExit.style.display = 'block';
     });
