@@ -2,6 +2,7 @@ main {
     position: relative;
 }
 
+
 /*radio*/
 
 .currency {
@@ -15,7 +16,7 @@ main {
     opacity: 0;
 }
 
-.currency__radio:checked + .img__radio {
+.currency__radio:checked+.img__radio {
     filter: none;
     border-color: tomato;
 }
@@ -47,8 +48,8 @@ main {
     background-image: url("../img/doshirak.png");
 }
 
-/*table*/
 
+/*table*/
 
 .shawarma {
     background: url("../img/shawarma.png") center/contain no-repeat;
@@ -68,6 +69,13 @@ main {
     width: 60px;
 }
 
+.head-sort {
+    cursor: pointer;
+}
+
+.table .thead-dark th.head-sort:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
 
 #orders tr {
     cursor: pointer;
@@ -77,6 +85,7 @@ main {
     background: #28a745;
     color: #fff;
 }
+
 
 /*modal*/
 

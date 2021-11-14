@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const ordersTable = document.getElementById('orders');
     const orderReadModal = document.getElementById('order_read');
     const orderActiveModal = document.getElementById('order_active');
+    const headTable = document.getElementById('head-table');
 
     // Получает заказы из localStorage:
     const getOrders = () => {
@@ -148,6 +149,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
         modal.addEventListener('click', modalClickHandler);
     };
+
+    // Сортировка объектов в массиве:
+    const sortOrder = (arr, property) => {
+        arr.sort((a, b) => a[property] > b[property] ? 1 : -1);
+    };
+
+    // Обработчик при клике на заголовки столбцов таблицы заказов:
+    headTable.addEventListener('click', (evt) => {
+        const target = evt.target;
+
+        if (target.classList.contains('head-sort')) {
+            if (target.id === 'task-sort') {
+                sortOrder(orders, 'title');
+            } else if (target.id === 'currency-sort') {
+                sortOrder(orders, 'currency');
+            } else if (target.id === 'deadline-sort') {
+                sortOrder(orders, 'deadline');
+            }
+        }
+
+        toStorage();
+        renderOrders();
+    });
 
     // Обработчик на таблицу при клике по строке
     ordersTable.addEventListener('click', (evt) => {
